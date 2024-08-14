@@ -129,7 +129,7 @@ def possui_exemplares_disponiveis(self):
 ```
 
 
-Os conceito de encapsulamento aparece em... de maneira...
+Usamos o conceito de encapsulamento para privar o atributo `nome` nas classes `Usuario()` e `Autor()`, que herdam da classe `Pessoa()`, dessa forma um novo valor não pode ser adicionado após o objeto ser inicializado, apenas a informação de contato pode ser diretamente alterada. Já o atributo `_exemplares`  da classe `Livro()` está apenas protegido.
 
 
 Os conceito de classe abstrata aparece em... de maneira...
