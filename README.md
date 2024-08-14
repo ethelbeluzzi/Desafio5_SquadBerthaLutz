@@ -100,7 +100,33 @@ Cada classe no nosso sistema foi cuidadosamente projetada para representar aspec
 Os conceito de herança aparece em... de maneira...
 
 
-Os conceito de propriedade aparece em... de maneira...
+🧩 **Conceito de Propriedade em Python**
+
+Os conceitos de propriedade aparecem em nosso sistema de gerenciamento de biblioteca de maneira fundamental, proporcionando um controle mais eficiente e encapsulado sobre os atributos das classes. Em Python, as propriedades permitem criar métodos que se comportam como atributos, garantindo que o acesso e a modificação dos dados sejam gerenciados de forma segura e controlada. Veja abaixo a explicação de como as propriedades são utilizadas em nosso código:
+
+📚 **Classe Livro - Propriedade quantidade_exemplares_disponiveis**
+
+Na classe Livro, a propriedade **quantidade_exemplares_disponiveis** é usada para calcular e retornar o número de exemplares disponíveis para empréstimo. Em vez de manter esse valor como um atributo separado e possivelmente desatualizado, usamos uma propriedade para calcular o valor dinamicamente com base no estado atual dos exemplares.
+
+```python
+
+@property
+def quantidade_exemplares_disponiveis(self):
+    """Retorna o número de exemplares disponíveis para empréstimo."""
+    return sum(1 for exemplar in self._exemplares if exemplar.estado == "disponível")
+```
+
+Aqui, **quantidade_exemplares_disponiveis** calcula a quantidade de exemplares disponíveis ao iterar sobre a lista **_exemplares** e contar aqueles cujo estado é **"disponível"**. Usar uma propriedade para isso garante que sempre obtendamos o valor mais atualizado sem a necessidade de armazenar um valor separado.
+
+📚 **Classe Livro - Propriedade**
+
+Outra propriedade na classe **Livro** é **possui_exemplares_disponiveis**, que indica se há pelo menos um exemplar disponível para empréstimo. Esta propriedade é baseada na propriedade **quantidade_exemplares_disponiveis** e fornece uma maneira conveniente de verificar a disponibilidade de exemplares de forma booleano.
+```
+@property
+def possui_exemplares_disponiveis(self):
+    """Retorna True se houver pelo menos um exemplar disponível"""
+    return self.quantidade_exemplares_disponiveis > 0
+```
 
 
 Os conceito de encapsulamento aparece em... de maneira...
