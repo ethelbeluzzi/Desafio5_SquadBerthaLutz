@@ -1,11 +1,13 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+
 class Pessoa(ABC):
     """
-        Define a classe Pessoa
-        - recebe: nome e telefone
+    Define a classe Pessoa
+    - recebe: nome e telefone
     """
+
     def __init__(self, nome: str, telefone: str):
         self.__nome = nome.title()
         self.telefone = telefone
@@ -15,42 +17,46 @@ class Pessoa(ABC):
     @property
     def nome(self):
         return self.__nome
-    
-  
-    @abstractmethod 
+
+    @abstractmethod
     def get_info(self):
         pass
 
+
 class Autor(Pessoa):
     """
-        Define a classe Autor
-        - recebe: nome
+    Define a classe Autor
+    - recebe: nome
     """
+
     def __init__(self, nome: str):
         # usa None para o valor do telefone do autor
         super().__init__(nome, None)
 
     # usaria o método __str__ aqui para retornar os valores
-    def get_info(self): 
+    def get_info(self):
         return f"Autor: {self.nome}"
-    
+
     def __str__(self) -> str:
-        return f'{self.nome}'
+        return f"{self.nome}"
+
 
 class Usuario(Pessoa):
     """
-        Define a classe Usuário
-        - recebe: nome e telefone
+    Define a classe Usuário
+    - recebe: nome e telefone
     """
+
     def __init__(self, nome: str, telefone: str):
         super().__init__(nome, telefone)
 
     # usaria o método __str__ aqui para retornar os valore.
-    # dessa forma preciso chamar um novo método pra ter o 
-    # retorno da string formatada, com __str__ posso retornar 
+    # dessa forma preciso chamar um novo método pra ter o
+    # retorno da string formatada, com __str__ posso retornar
     # uma string chamando diretamente do objeto.
     def get_info(self):
         return f"Usuário: {self.nome}, Telefone: {self.telefone}"
+
 
 class Livro:
     def __init__(self, titulo, editora, autores, generos):
@@ -59,7 +65,7 @@ class Livro:
         self.autores = autores  # Lista de objetos Autor
         self.generos = generos  # Lista de gêneros
         self._exemplares = []  # Lista de objetos Exemplar
-    
+
     def adicionar_exemplar(self, exemplar):
         self._exemplares.append(exemplar)
 
@@ -71,16 +77,19 @@ class Livro:
     @property
     def quantidade_exemplares_disponiveis(self):
         """Retorna o número de exemplares disponíveis para empréstimo."""
-return sum(1 for exemplar in self._exemplares if exemplar.estado == "disponível")
+        return sum(
+            1 for exemplar in self._exemplares if exemplar.estado == "disponível"
+        )
 
-def __str__(self) -> str:
-    return f'{self.titulo}, {self.autores}, {self.editora} - {self.quantidade_exemplares_disponiveis}'
-
+    def __str__(self) -> str:
+        return f"{self.titulo}, {self.autores}, {self.editora} - {self.quantidade_exemplares_disponiveis}"
 
     @property
     def possui_exemplares_disponiveis(self):
         """Retorna True se houver pelo menos um exemplar disponível"""
         return self.quantidade_exemplares_disponiveis > 0
+
+
 class Exemplar:
     def __init__(self, livro):
         self.livro = livro
@@ -91,6 +100,7 @@ class Exemplar:
 
     def devolver(self):
         self.estado = "disponível"
+
 
 class Emprestimo:
     def __init__(self, usuario, exemplar, max_renovacoes=0):
@@ -114,9 +124,12 @@ class Emprestimo:
         else:
             print("Número máximo de renovações atingido.")
 
+
 autor1 = Autor("J.K. Rowling")
 
-livro1 = Livro("Harry Potter e a Pedra Filosofal", "Rocco", [autor1], ["Fantasia", "Aventura"])
+livro1 = Livro(
+    "Harry Potter e a Pedra Filosofal", "Rocco", [autor1], ["Fantasia", "Aventura"]
+)
 
 # Adicionando exemplares
 exemplar1 = Exemplar(livro1)
@@ -143,4 +156,6 @@ print(f"Data de Devolução: {emprestimo1.data_devolucao}")
 print(f"Estado do Empréstimo: {emprestimo1.estado}")
 
 # Verificando a quantidade de exemplares disponíveis
-print(f"Exemplares disponíveis de '{livro1.titulo}': {livro1.quantidade_exemplares_disponiveis}")
+print(
+    f"Exemplares disponíveis de '{livro1.titulo}': {livro1.quantidade_exemplares_disponiveis}"
+)
