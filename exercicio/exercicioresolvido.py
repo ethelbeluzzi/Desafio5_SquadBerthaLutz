@@ -5,12 +5,12 @@ from datetime import datetime
 class Pessoa(ABC):
     """
     Define a classe Pessoa
-    - recebe: nome e telefone
+    - recebe: nome
     """
 
-    def __init__(self, nome: str, telefone: str):
+    # toda pessoa deve ter um nome
+    def __init__(self, nome: str):
         self.__nome = nome.title()
-        self.telefone = telefone
 
     # encapsula o atributo nome para que ele
     # não seja alterado diretamente
@@ -31,7 +31,7 @@ class Autor(Pessoa):
 
     def __init__(self, nome: str):
         # usa None para o valor do telefone do autor
-        super().__init__(nome, None)
+        super().__init__(nome)
 
     # usaria o método __str__ aqui para retornar os valores
     def get_info(self):
@@ -48,7 +48,7 @@ class Usuario(Pessoa):
     """
 
     def __init__(self, nome: str, telefone: str):
-        super().__init__(nome, telefone)
+        super().__init__(nome)
 
     # usaria o método __str__ aqui para retornar os valore.
     # dessa forma preciso chamar um novo método pra ter o
