@@ -141,7 +141,7 @@ emprestimo1.devolver()
 print(f"Estado do Empréstimo após devolução: {emprestimo1.estado}")
 print(f"Exemplares disponíveis de '{livro1.titulo}' após devolução: {livro1.exemplares_disponiveis}")
 
-# Testando atraso de empréstimo
+# Testando atraso de empréstimos
 emprestimo2 = Emprestimo(usuario1, exemplar2, max_renovacoes=1, duracao_emprestimo=1)  # Empréstimo de 1 dia
 exemplar2.emprestar()
 
