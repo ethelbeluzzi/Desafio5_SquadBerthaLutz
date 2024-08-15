@@ -1,20 +1,10 @@
 from abc import ABC, abstractmethod
-from datetime import datetime, timedelta
+from datetime import datetime
 
 class Pessoa(ABC):
-    def __init__(self, nome, telefone, email=None, endereco=None):
+    def __init__(self, nome, telefone):
         self.nome = nome
         self.telefone = telefone
-        self.email = email
-        self.endereco = endereco
-
-    def exibir_info_completa(self):
-        info = f"Nome: {self.nome}, Telefone: {self.telefone}"
-        if self.email:
-            info += f", Email: {self.email}"
-        if self.endereco:
-            info += f", Endereço: {self.endereco}"
-        return info
 
     @abstractmethod
     def get_info(self):
@@ -24,53 +14,16 @@ class Autor(Pessoa):
     def get_info(self):
         return f"Autor: {self.nome}, Telefone: {self.telefone}"
 
-    def listar_livros(self, livros):
-        return [livro.titulo for livro in livros if self in livro.autores]
-
-class Funcionario(Pessoa):
-    def __init__(self, nome, telefone, email=None, endereco=None, cargo=None):
-        super().__init__(nome, telefone, email, endereco)
-        self.cargo = cargo
-
-    def get_info(self):
-        return f"Funcionário: {self.nome}, Cargo: {self.cargo}"
-
 class Usuario(Pessoa):
-    contador_cadastro = 1  # Variável de classe para controle de número de cadastro
-
-    def __init__(self, nome, telefone, email=None, endereco=None):
-        super().__init__(nome, telefone, email, endereco)
-        self.emprestimos = []
-        self.reservas = []
-        self.numero_cadastro = Usuario.contador_cadastro
-        Usuario.contador_cadastro += 1  # Incrementa o número de cadastro para o próximo usuário
-
-    def adicionar_emprestimo(self, emprestimo):
-        self.emprestimos.append(emprestimo)
-
-    def listar_emprestimos(self):
-        return [f"{emp.exemplar.livro.titulo} (Devolução: {emp.data_devolucao})" for emp in self.emprestimos]
-
-    def adicionar_reserva(self, reserva):
-        self.reservas.append(reserva)
-
-    def listar_reservas(self):
-        return [f"Reserva: {reserva.livro.titulo}" for reserva in self.reservas]
-
     def get_info(self):
-        return f"Usuário: {self.nome}, Telefone: {self.telefone}, Cadastro Nº: {self.numero_cadastro}"
+        return f"Usuário: {self.nome}, Telefone: {self.telefone}"
 
 class Livro:
-    def __init__(self, titulo, editora, autores, generos, lingua, num_paginas, isbn=None, ano_publicacao=None, sinopse=None):
+    def __init__(self, titulo, editora, autores, generos):
         self.titulo = titulo
         self.editora = editora
         self.autores = autores  # Lista de objetos Autor
         self.generos = generos  # Lista de gêneros
-        self.lingua = lingua  # Língua do livro
-        self.num_paginas = num_paginas  # Número de páginas do livro
-        self.isbn = isbn
-        self.ano_publicacao = ano_publicacao
-        self.sinopse = sinopse
         self._exemplares = []  # Lista de objetos Exemplar
 
     def adicionar_exemplar(self, exemplar):
@@ -84,7 +37,7 @@ class Livro:
     @property
     def exemplares_disponiveis(self):
         """Retorna o número de exemplares disponíveis para empréstimo."""
-        return len([ex for ex in self._exemplares if ex.estado == "disponível"])
+        return len(self._exemplares)
 
 class Exemplar:
     def __init__(self, livro):
@@ -98,16 +51,14 @@ class Exemplar:
         self.estado = "disponível"
 
 class Emprestimo:
-    def __init__(self, usuario, exemplar, max_renovacoes=0, duracao_emprestimo=14):
+    def __init__(self, usuario, exemplar, max_renovacoes=0):
         self.usuario = usuario
         self.exemplar = exemplar
         self.data_emprestimo = datetime.now()
-        self.data_devolucao_prevista = self.data_emprestimo + timedelta(days=duracao_emprestimo)
         self.data_devolucao = None
         self.renovacoes = 0
         self.max_renovacoes = max_renovacoes
         self.estado = "emprestado"
-        usuario.adicionar_emprestimo(self)
 
     def devolver(self):
         self.data_devolucao = datetime.now()
@@ -118,37 +69,27 @@ class Emprestimo:
         if self.renovacoes < self.max_renovacoes:
             self.renovacoes += 1
             self.data_emprestimo = datetime.now()
-            self.data_devolucao_prevista = self.data_emprestimo + timedelta(days=14)
         else:
             print("Número máximo de renovações atingido.")
 
-    def esta_atrasado(self):
-        return datetime.now() > self.data_devolucao_prevista and self.estado == "emprestado"
+autor1 = Autor("J.K. Rowling", "1234-5678")
 
-class Reserva:
-    def __init__(self, usuario, livro):
-        self.usuario = usuario
-        self.livro = livro
-        usuario.adicionar_reserva(self)
+livro1 = Livro("Harry Potter e a Pedra Filosofal", "Rocco", [autor1], ["Fantasia", "Aventura"])
 
-class Multa:
-    def __init__(self, emprestimo, valor_por_dia=1.0):
-        self.emprestimo = emprestimo
-        self.valor_por_dia = valor_por_dia
+exemplar1 = Exemplar(livro1)
+livro1.adicionar_exemplar(exemplar1)
 
-    def calcular_multa(self):
-        if self.emprestimo.esta_atrasado():
-            dias_atraso = (datetime.now() - self.emprestimo.data_devolucao_prevista).days
-            return dias_atraso * self.valor_por_dia
-        return 0.0
+usuario1 = Usuario("João da Silva", "1111-2222")
 
-class Log:
-    def __init__(self):
-        self.eventos = []
+emprestimo1 = Emprestimo(usuario1, exemplar1, max_renovacoes=2)
+exemplar1.emprestar()
 
-    def registrar_evento(self, descricao):
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.eventos.append(f"{timestamp} - {descricao}")
+emprestimo1.devolver()
 
-    def exibir_logs(self):
-        return "\n".join(self.eventos)
+print(f"Usuário: {emprestimo1.usuario.nome}")
+print(f"Livro: {emprestimo1.exemplar.livro.titulo}")
+print(f"Data de Empréstimo: {emprestimo1.data_emprestimo}")
+print(f"Data de Devolução: {emprestimo1.data_devolucao}")
+print(f"Estado do Empréstimo: {emprestimo1.estado}")
+
+print(f"Exemplares disponíveis de '{livro1.titulo}': {livro1.exemplares_disponiveis}")
