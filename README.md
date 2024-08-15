@@ -42,6 +42,9 @@ get_info(): Retorna uma string com os detalhes do usuário.
 adicionar_emprestimo(emprestimo): Adiciona um novo empréstimo ao histórico do usuário.
 listar_emprestimos(): Retorna uma lista de livros emprestados pelo usuário, com as respectivas datas de devolução.
 
+Update 15/08/2024:
+A classe Usuario foi aprimorada com a adição de um atributo numero_cadastro, que é gerado automaticamente e atribuído a cada usuário de forma única. Esse número de cadastro permite uma identificação mais precisa e organizada dos usuários no sistema de biblioteca.
+numero_cadastro: Cada usuário recebe um número de cadastro único, gerado automaticamente ao criar o usuário, facilitando o gerenciamento e identificação de usuários.
 
 📖 Classe Livro - A essência do acervo
 
@@ -60,6 +63,11 @@ Métodos:
 adicionar_exemplar(exemplar): Adiciona um exemplar do livro ao acervo.
 remover_exemplar(): Remove um exemplar do acervo.
 exemplares_disponiveis: Retorna o número de exemplares disponíveis para empréstimo.
+
+Update 15/08/2024:
+Dois novos atributos foram adicionados à classe Livro para fornecer informações mais detalhadas sobre o acervo da biblioteca:
+lingua: Indica a língua em que o livro está escrito, permitindo que os usuários filtrem ou busquem por livros em línguas específicas.
+num_paginas: Especifica o número de páginas do livro, o que pode ser útil para os leitores ao escolherem livros baseados em sua extensão.
 
 
 📚 Classe Exemplar - Gerenciando as cópias físicas
@@ -91,6 +99,20 @@ Métodos:
 devolver(): Marca o empréstimo como devolvido e atualiza o estado do exemplar.
 renovar(): Renova o empréstimo, ajustando a data de devolução prevista.
 esta_atrasado(): Verifica se o empréstimo está atrasado.
+
+Update 15/08/2024:
+A classe Emprestimo agora está integrada com a classe Multa, que foi adicionada para gerenciar multas por atrasos na devolução de livros. A classe Multa calcula o valor devido com base nos dias de atraso do empréstimo.
+Classe Multa: Calcula e gerencia multas para empréstimos atrasados, proporcionando uma camada extra de controle sobre os empréstimos na biblioteca.
+
+Update 15/08/2024
+Adiçao de novas classes:
+📚 Classe Reserva
+A classe Reserva foi adicionada para permitir que os usuários reservem livros quando todos os exemplares estiverem emprestados. Essa funcionalidade melhora o gerenciamento de disponibilidade e a experiência dos usuários da biblioteca.
+Classe Reserva: Permite que os usuários façam reservas de livros quando os exemplares estiverem indisponíveis, gerenciando uma fila de espera para os empréstimos.
+
+📚 Classe Log - Registro de Eventos
+A classe Log foi introduzida para registrar eventos importantes no sistema, como empréstimos, devoluções, aplicação de multas e reservas. Essa funcionalidade é útil para manter um histórico de atividades e auditoria.
+Classe Log: Registra eventos significativos no sistema, como empréstimos e devoluções, facilitando o rastreamento e a auditoria das operações da biblioteca.
 
 
 🌟 Conclusão
