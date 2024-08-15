@@ -32,7 +32,7 @@ class Autor(Pessoa):
         super().__init__(nome)
 
     def __str__(self) -> str:
-        return f"{self.nome}"
+        return f"Autor: {self.nome}"
 
 
 class Usuario(Pessoa):
