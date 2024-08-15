@@ -18,10 +18,6 @@ class Pessoa(ABC):
     def nome(self):
         return self.__nome
 
-    @abstractmethod
-    def get_info(self):
-        pass
-
 
 class Autor(Pessoa):
     """
@@ -30,15 +26,10 @@ class Autor(Pessoa):
     """
 
     def __init__(self, nome: str):
-        # usa None para o valor do telefone do autor
         super().__init__(nome)
 
-    # usaria o método __str__ aqui para retornar os valores
-    def get_info(self):
-        return f"Autor: {self.nome}"
-
     def __str__(self) -> str:
-        return f"{self.nome}"
+        return f"Autor: {self.nome}"
 
 
 class Usuario(Pessoa):
@@ -47,15 +38,17 @@ class Usuario(Pessoa):
     - recebe: nome e telefone
     """
 
-    def __init__(self, nome: str, telefone: str):
+    def __init__(self, nome: str, telefone: str, nacionalidade: str):
         super().__init__(nome)
+        self.telefone = telefone
+        self.__nacionalidade = nacionalidade
 
-    # usaria o método __str__ aqui para retornar os valore.
-    # dessa forma preciso chamar um novo método pra ter o
-    # retorno da string formatada, com __str__ posso retornar
-    # uma string chamando diretamente do objeto.
-    def get_info(self):
-        return f"Usuário: {self.nome}, Telefone: {self.telefone}"
+        @property
+        def nacionalidade(self):
+            return self.__nacionalidade
+
+        def __str__(self) -> str:
+            return f"Nome: {self.nome}, Telefone: {self.telefone}, Nacionalidade: {self.nacionalidade}"
 
 
 class Livro:
@@ -136,7 +129,7 @@ exemplar1 = Exemplar(livro1)
 livro1.adicionar_exemplar(exemplar1)
 exemplar2 = Exemplar(livro1)
 livro1.adicionar_exemplar(exemplar2)
-usuario1 = Usuario("João da Silva", "1111-2222")
+usuario1 = Usuario("João da Silva", "1111-2222", "Brasileiro")
 
 emprestimo1 = Emprestimo(usuario1, exemplar1, max_renovacoes=2)
 exemplar1.emprestar()
