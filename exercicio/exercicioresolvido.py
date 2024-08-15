@@ -18,8 +18,9 @@ class Pessoa(ABC):
     def nome(self):
         return self.__nome
 
+    @abstractmethod
     def __str__(self) -> str:
-        return f"{self.nome}"
+        pass
 
 
 class Autor(Pessoa):
@@ -44,7 +45,7 @@ class Usuario(Pessoa):
     def __init__(self, nome: str, telefone: str, nacionalidade: str):
         super().__init__(nome)
         self.telefone = telefone
-        self.__nacionalidade = nacionalidade
+        self.__nacionalidade = nacionalidade  # privado
 
     @property
     def nacionalidade(self):
