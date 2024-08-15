@@ -27,10 +27,23 @@ class Autor(Pessoa):
     def listar_livros(self, livros):
         return [livro.titulo for livro in livros if self in livro.autores]
 
+class Funcionario(Pessoa):
+    def __init__(self, nome, telefone, email=None, endereco=None, cargo=None):
+        super().__init__(nome, telefone, email, endereco)
+        self.cargo = cargo
+
+    def get_info(self):
+        return f"Funcionário: {self.nome}, Cargo: {self.cargo}"
+
 class Usuario(Pessoa):
+    contador_cadastro = 1  # Variável de classe para controle de número de cadastro
+
     def __init__(self, nome, telefone, email=None, endereco=None):
         super().__init__(nome, telefone, email, endereco)
         self.emprestimos = []
+        self.reservas = []
+        self.numero_cadastro = Usuario.contador_cadastro
+        Usuario.contador_cadastro += 1  # Incrementa o número de cadastro para o próximo usuário
 
     def adicionar_emprestimo(self, emprestimo):
         self.emprestimos.append(emprestimo)
@@ -38,15 +51,23 @@ class Usuario(Pessoa):
     def listar_emprestimos(self):
         return [f"{emp.exemplar.livro.titulo} (Devolução: {emp.data_devolucao})" for emp in self.emprestimos]
 
+    def adicionar_reserva(self, reserva):
+        self.reservas.append(reserva)
+
+    def listar_reservas(self):
+        return [f"Reserva: {reserva.livro.titulo}" for reserva in self.reservas]
+
     def get_info(self):
-        return f"Usuário: {self.nome}, Telefone: {self.telefone}"
+        return f"Usuário: {self.nome}, Telefone: {self.telefone}, Cadastro Nº: {self.numero_cadastro}"
 
 class Livro:
-    def __init__(self, titulo, editora, autores, generos, isbn=None, ano_publicacao=None, sinopse=None):
+    def __init__(self, titulo, editora, autores, generos, lingua, num_paginas, isbn=None, ano_publicacao=None, sinopse=None):
         self.titulo = titulo
         self.editora = editora
         self.autores = autores  # Lista de objetos Autor
         self.generos = generos  # Lista de gêneros
+        self.lingua = lingua  # Língua do livro
+        self.num_paginas = num_paginas  # Número de páginas do livro
         self.isbn = isbn
         self.ano_publicacao = ano_publicacao
         self.sinopse = sinopse
@@ -104,49 +125,30 @@ class Emprestimo:
     def esta_atrasado(self):
         return datetime.now() > self.data_devolucao_prevista and self.estado == "emprestado"
 
-# ---- Testes ----
+class Reserva:
+    def __init__(self, usuario, livro):
+        self.usuario = usuario
+        self.livro = livro
+        usuario.adicionar_reserva(self)
 
-# Criando instâncias de autor e livro
-autor1 = Autor("J.K. Rowling", "1234-5678", email="jk@example.com")
-livro1 = Livro("Harry Potter e a Pedra Filosofal", "Rocco", [autor1], ["Fantasia", "Aventura"], isbn="978-3-16-148410-0", ano_publicacao=1997, sinopse="Um menino descobre que é um bruxo.")
+class Multa:
+    def __init__(self, emprestimo, valor_por_dia=1.0):
+        self.emprestimo = emprestimo
+        self.valor_por_dia = valor_por_dia
 
-# Adicionando exemplares ao livro
-exemplar1 = Exemplar(livro1)
-exemplar2 = Exemplar(livro1)
-livro1.adicionar_exemplar(exemplar1)
-livro1.adicionar_exemplar(exemplar2)
+    def calcular_multa(self):
+        if self.emprestimo.esta_atrasado():
+            dias_atraso = (datetime.now() - self.emprestimo.data_devolucao_prevista).days
+            return dias_atraso * self.valor_por_dia
+        return 0.0
 
-# Criando um usuário
-usuario1 = Usuario("João da Silva", "1111-2222", email="joao@example.com")
+class Log:
+    def __init__(self):
+        self.eventos = []
 
-# Realizando um empréstimo
-emprestimo1 = Emprestimo(usuario1, exemplar1, max_renovacoes=2)
-exemplar1.emprestar()
+    def registrar_evento(self, descricao):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        self.eventos.append(f"{timestamp} - {descricao}")
 
-# Exibindo informações
-print(f"Informações do Autor: {autor1.get_info()}")
-print(f"Livros do Autor: {autor1.listar_livros([livro1])}")
-
-print(f"Informações do Usuário: {usuario1.get_info()}")
-print(f"Empréstimos do Usuário: {usuario1.listar_emprestimos()}")
-
-print(f"Exemplares disponíveis de '{livro1.titulo}': {livro1.exemplares_disponiveis}")
-
-# Testando renovação e devolução
-emprestimo1.renovar()
-print(f"Data de Empréstimo após renovação: {emprestimo1.data_emprestimo}")
-print(f"Data de Devolução Prevista após renovação: {emprestimo1.data_devolucao_prevista}")
-
-emprestimo1.devolver()
-print(f"Estado do Empréstimo após devolução: {emprestimo1.estado}")
-print(f"Exemplares disponíveis de '{livro1.titulo}' após devolução: {livro1.exemplares_disponiveis}")
-
-# Testando atraso de empréstimos
-emprestimo2 = Emprestimo(usuario1, exemplar2, max_renovacoes=1, duracao_emprestimo=1)  # Empréstimo de 1 dia
-exemplar2.emprestar()
-
-# Simulando um atraso (aumentando artificialmente a data de empréstimo)
-emprestimo2.data_emprestimo -= timedelta(days=2)
-emprestimo2.data_devolucao_prevista = emprestimo2.data_emprestimo + timedelta(days=1)
-
-print(f"O empréstimo 2 está atrasado? {emprestimo2.esta_atrasado()}")
+    def exibir_logs(self):
+        return "\n".join(self.eventos)
