@@ -39,20 +39,18 @@ class Autor(Pessoa):
 class Usuario(Pessoa):
     """
     Define a classe Usuário
-    - recebe: nome, telefone e nacionalidade
+    - recebe: nome e telefone
     """
 
-    def __init__(self, nome: str, telefone: str, nacionalidade: str):
-        super().__init__(nome)
-        self.telefone = telefone
-        self.__nacionalidade = nacionalidade  # privado
+    def __init__(self, nome: str, telefone: str):
+        super().__init__(nome, telefone)
 
-    @property
-    def nacionalidade(self):
-        return self.nacionalidade
-
-    def __str__(self):
-        return f"Nome: {self.nome}, Telefone {self.telephone}, Nacionalidade: {self.nacionalidade}"
+    # usaria o método __str__ aqui para retornar os valore.
+    # dessa forma preciso chamar um novo método pra ter o
+    # retorno da string formatada, com __str__ posso retornar
+    # uma string chamando diretamente do objeto.
+    def get_info(self):
+        return f"Usuário: {self.nome}, Telefone: {self.telefone}"
 
 
 class Livro:
@@ -72,14 +70,15 @@ class Livro:
         return None
 
     @property
-    def quantidade_exemplares_disponiveis(self):
+    def exemplares_disponiveis(self):
         """Retorna o número de exemplares disponíveis para empréstimo."""
-        return sum(
-            1 for exemplar in self._exemplares if exemplar.estado == "disponível"
-        )
 
-    def __str__(self) -> str:
-        return f"{self.titulo}, {self.autores}, {self.editora} - {self.quantidade_exemplares_disponiveis}"
+
+return sum(1 for exemplar in self._exemplares if exemplar.estado == "disponível")
+
+
+def __str__(self) -> str:
+    return f"{self.titulo}, {self.autores}, {self.editora} - {self.quantidade_exemplares_disponiveis}"
 
     @property
     def possui_exemplares_disponiveis(self):
@@ -123,12 +122,12 @@ class Emprestimo:
 
 
 autor1 = Autor("J.K. Rowling")
+autor1 = Autor("J.K. Rowling", "1234-5678")
 
 livro1 = Livro(
     "Harry Potter e a Pedra Filosofal", "Rocco", [autor1], ["Fantasia", "Aventura"]
 )
 
-# Adicionando exemplares
 exemplar1 = Exemplar(livro1)
 livro1.adicionar_exemplar(exemplar1)
 exemplar2 = Exemplar(livro1)
@@ -137,14 +136,8 @@ usuario1 = Usuario("João da Silva", "1111-2222", "Brasileiro")
 
 emprestimo1 = Emprestimo(usuario1, exemplar1, max_renovacoes=2)
 exemplar1.emprestar()
-exemplar2.emprestar()
 
 emprestimo1.devolver()
-
-if livro1.possui_exemplares_disponiveis:
-    print(f"Ainda há exemplares disponíveis de '{livro1.titulo}'")
-else:
-    print(f"Não há mais exemplares de '{livro1.titulo}'")
 
 print(f"Usuário: {emprestimo1.usuario.nome}")
 print(f"Livro: {emprestimo1.exemplar.livro.titulo}")
