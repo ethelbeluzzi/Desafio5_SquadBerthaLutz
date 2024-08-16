@@ -4,7 +4,7 @@ from datetime import datetime
 
 class Pessoa(ABC):
     """
-    Define a classe Pessoa
+    Define a classe abstrata Pessoa
     - recebe: nome
     """
 
@@ -39,18 +39,20 @@ class Autor(Pessoa):
 class Usuario(Pessoa):
     """
     Define a classe Usuário
-    - recebe: nome e telefone
+    - recebe: nome, telefone e nacionalidade
     """
 
-    def __init__(self, nome: str, telefone: str):
-        super().__init__(nome, telefone)
+    def __init__(self, nome: str, telefone: str, nacionalidade: str):
+        super().__init__(nome)
+        self.telefone = telefone
+        self.nacionalidade = nacionalidade
 
     # usaria o método __str__ aqui para retornar os valore.
     # dessa forma preciso chamar um novo método pra ter o
     # retorno da string formatada, com __str__ posso retornar
     # uma string chamando diretamente do objeto.
-    def get_info(self):
-        return f"Usuário: {self.nome}, Telefone: {self.telefone}"
+    def __str__(self):
+        return f"Usuário: {self.nome}, Telefone: {self.telefone}, Nacionalidade: {self.nacionalidade}"
 
 
 class Livro:
@@ -73,12 +75,13 @@ class Livro:
     def exemplares_disponiveis(self):
         """Retorna o número de exemplares disponíveis para empréstimo."""
 
+        return sum(
+            1 for exemplar in self._exemplares if exemplar.estado == "disponível"
+        )
 
-return sum(1 for exemplar in self._exemplares if exemplar.estado == "disponível")
-
-
-def __str__(self) -> str:
-    return f"{self.titulo}, {self.autores}, {self.editora} - {self.quantidade_exemplares_disponiveis}"
+    def __str__(self) -> str:
+        # erro nessa linha, não entendi bem o que está sendo feito aqui:
+        return f"{self.titulo}, {self.autores}, {self.editora} - {self.quantidade_exemplares_disponiveis}"
 
     @property
     def possui_exemplares_disponiveis(self):
@@ -122,7 +125,6 @@ class Emprestimo:
 
 
 autor1 = Autor("J.K. Rowling")
-autor1 = Autor("J.K. Rowling", "1234-5678")
 
 livro1 = Livro(
     "Harry Potter e a Pedra Filosofal", "Rocco", [autor1], ["Fantasia", "Aventura"]
