@@ -85,7 +85,7 @@ devolver(): Marca o exemplar como disponível.
 🔄 Classe Emprestimo - Orquestrando o ciclo de empréstimos
 
 A classe Emprestimo é a espinha dorsal do sistema de empréstimos, gerenciando todo o ciclo de vida de um empréstimo, desde a retirada do livro até a sua devolução ou renovação.
-
+* Tambem serve para as subclasses 'EmprestimoDigital' e 'EmprestimoFisico' que herdam de 'Emprestimo.'
 Atributos:
 usuario: O objeto Usuario que fez o empréstimo.
 exemplar: O objeto Exemplar que foi emprestado.
@@ -99,6 +99,11 @@ Métodos:
 devolver(): Marca o empréstimo como devolvido e atualiza o estado do exemplar.
 renovar(): Renova o empréstimo, ajustando a data de devolução prevista.
 esta_atrasado(): Verifica se o empréstimo está atrasado.
+
+### Subclasses 'EmprestimoDigital' e 'EmprestimoFisico'
+* Diferenciam os diferentes comportamentos do emprestimos
+*O metodo 'tipo_emprestimo()' identifica e retorna o tipo  (digital ou fisico).EmprestimoDigital retorna "Emprestimo Digital" e EmprestimoFisico retorna "Emprestimo Fisico". Esse método permite a diferenciar clara tipos de empréstimo, mantendo a lógica básica na classe base e implementando as especificidades nas subclasses.
+
 
 Update 15/08/2024:
 A classe Emprestimo agora está integrada com a classe Multa, que foi adicionada para gerenciar multas por atrasos na devolução de livros. A classe Multa calcula o valor devido com base nos dias de atraso do empréstimo.
