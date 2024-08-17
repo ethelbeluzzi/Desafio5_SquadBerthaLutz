@@ -10,16 +10,13 @@ Os conceitos de classe aparecem em nosso sistema de gerenciamento de biblioteca 
 
 📚 Classe Pessoa - A base abstrata para autoras e usuárias
 
-A classe Pessoa é a fundação abstrata do sistema, encapsulando atributos comuns a todas as pessoas que interagem com a biblioteca. Esta classe é abstrata (ABC), o que significa que ela não pode ser instanciada diretamente, mas serve como uma base para outras classes, como Autor e Usuario.
+Uma classe abstrata em programação orientada a objetos é uma classe que não pode ser instanciada diretamente e serve como um modelo para outras classes. Seu propósito é fornecer uma base comum para um grupo de subclasses, garantindo que elas implementem certos métodos e atributos. Classes abstratas são uma maneira de definir uma interface que outras classes devem seguir, ajudando a promover um design mais organizado e modular.
 
 Atributos:
 nome: Nome da pessoa.
-telefone: Número de telefone.
-email: Endereço de email (opcional).
-endereco: Endereço físico (opcional).
+
 Métodos:
-exibir_info_completa(): Exibe todas as informações disponíveis sobre a pessoa.
-get_info(): Um método abstrato que deve ser implementado pelas subclasses para fornecer detalhes específicos.
+__str__(): Um método abstrato que deve ser implementado pelas subclasses para fornecer detalhes específicos.
 
 
 ✒️ Classe Autor - Representando pessoas criadoras de conteúdo
@@ -27,7 +24,7 @@ get_info(): Um método abstrato que deve ser implementado pelas subclasses para 
 A classe Autor herda de Pessoa e se especializa em representar os autores dos livros da biblioteca. Além das informações pessoais herdadas, Autor pode listar os livros que escreveu, integrando-se diretamente ao acervo da biblioteca.
 
 Métodos:
-get_info(): Retorna uma string com os detalhes do autor.
+__str__(): Retorna uma string com os detalhes do autor.
 listar_livros(livros): Gera uma lista dos títulos de livros associados a este autor.
 
 
@@ -36,9 +33,13 @@ listar_livros(livros): Gera uma lista dos títulos de livros associados a este a
 A classe Usuario também herda de Pessoa, mas é focada nos leitores que utilizam a biblioteca. Esta classe gerencia os empréstimos feitos pelo usuário, permitindo que eles acessem e controlem suas atividades na biblioteca.
 
 Atributos:
+nome: Nome do usuário
+telefone: telefone do usuário
+nacionalidade: nacionalidade do usuário
+
 emprestimos: Lista de empréstimos associados ao usuário.
 Métodos:
-get_info(): Retorna uma string com os detalhes do usuário.
+__str__(): Retorna uma string com os detalhes do usuário.
 adicionar_emprestimo(emprestimo): Adiciona um novo empréstimo ao histórico do usuário.
 listar_emprestimos(): Retorna uma lista de livros emprestados pelo usuário, com as respectivas datas de devolução.
 
