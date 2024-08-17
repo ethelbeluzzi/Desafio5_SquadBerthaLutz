@@ -2,6 +2,32 @@
 
 Repositório para os exercícios do Desafio 5 da Semana 04 do Bootcamp Back-end Python e Django do **Squad Bertha Lutz**.
 
+Integrantes: 👩‍💻
+
+1. Ethel Panitsa Beluzzi
+Criação do modelo base
+
+2. Hyngrid Souza e Silva
+Revisão geral e melhoria das explicações no read.me
+
+3. Karine Yasmin dos Santos Ribeiro
+Conceito de classe abstrata (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
+
+4. Larissa Vital Caetano Pereira
+Conceito de propriedade (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
+
+5. Louise Silva Ferreira
+Conceito de classe (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
+
+6. Marina Caponera Silva
+Conceito de encapsulamento (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
+
+7. Natália do Nascimento da Costa
+Revisão geral do código e teste dele completo
+
+8. Sofia Nakamaru
+Conceito de herança (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
+
 O desafio consiste em... o que foi feito...
 
 
