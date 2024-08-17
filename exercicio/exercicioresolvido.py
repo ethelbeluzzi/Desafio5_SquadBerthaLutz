@@ -122,6 +122,13 @@ class Emprestimo:
             self.data_emprestimo = datetime.now()
         else:
             print("Número máximo de renovações atingido.")
+class EmprestimoDigital(Emprestimo):
+        def tipo_emprestimo(self):
+            return "Emprestimo Digital"
+        
+class EmprestimoFisico(Emprestimo):
+        def tipo_emprestimo(self):
+            return "Emprestimo Fisico"
 
 
 autor1 = Autor("J.K. Rowling")
@@ -136,18 +143,15 @@ exemplar2 = Exemplar(livro1)
 livro1.adicionar_exemplar(exemplar2)
 usuario1 = Usuario("João da Silva", "1111-2222", "Brasileiro")
 
-emprestimo1 = Emprestimo(usuario1, exemplar1, max_renovacoes=2)
+emprestimo_fisico= EmprestimoFisico(usuario1, exemplar1, max_renovacoes=2)
 exemplar1.emprestar()
 
-emprestimo1.devolver()
+emprestimo_fisico.devolver()
 
-print(f"Usuário: {emprestimo1.usuario.nome}")
-print(f"Livro: {emprestimo1.exemplar.livro.titulo}")
-print(f"Data de Empréstimo: {emprestimo1.data_emprestimo}")
-print(f"Data de Devolução: {emprestimo1.data_devolucao}")
-print(f"Estado do Empréstimo: {emprestimo1.estado}")
-
-# Verificando a quantidade de exemplares disponíveis
-print(
-    f"Exemplares disponíveis de '{livro1.titulo}': {livro1.quantidade_exemplares_disponiveis}"
-)
+print(f"Tipo de Empréstimo: {emprestimo_fisico.tipo_emprestimo()}")
+print(f"Usuário: {emprestimo_fisico.usuario.nome}")
+print(f"Livro: {emprestimo_fisico.exemplar.livro.titulo}")
+print(f"Data de Empréstimo: {emprestimo_fisico.data_emprestimo}")
+print(f"Data de Devolução: {emprestimo_fisico.data_devolucao}")
+print(f"Estado do Empréstimo: {emprestimo_fisico.estado}")
+print(f"Exemplares disponíveis de '{livro1.titulo}': {livro1.exemplares_disponiveis}")
