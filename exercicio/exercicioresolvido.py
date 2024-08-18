@@ -80,14 +80,12 @@ class Livro:
         )
 
     def __str__(self) -> str:
-        # erro nessa linha, não entendi bem o que está sendo feito aqui:
-        return f"{self.titulo}, {self.autores}, {self.editora} - {self.quantidade_exemplares_disponiveis}"
+        return f"{self.titulo}, {', '.join(str(autor) for autor in self.autores)}, {self.editora} - {self.exemplares_disponiveis}"
 
     @property
     def possui_exemplares_disponiveis(self):
         """Retorna True se houver pelo menos um exemplar disponível"""
-        return self.quantidade_exemplares_disponiveis > 0
-
+        return self.exemplares_disponiveis > 0
 
 class Exemplar:
     def __init__(self, livro):
@@ -123,12 +121,12 @@ class Emprestimo:
         else:
             print("Número máximo de renovações atingido.")
 class EmprestimoDigital(Emprestimo):
-        def tipo_emprestimo(self):
-            return "Emprestimo Digital"
+    def tipo_emprestimo(self):
+        return "Empréstimo Digital"
         
 class EmprestimoFisico(Emprestimo):
-        def tipo_emprestimo(self):
-            return "Emprestimo Fisico"
+    def tipo_emprestimo(self):
+        return "Empréstimo Físico"
 
 
 autor1 = Autor("J.K. Rowling")
