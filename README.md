@@ -167,7 +167,7 @@ A classe `Log` foi introduzida para registrar eventos importantes no sistema, co
 
 ## 🌟 Conclusão
 
-Cada classe no nosso sistema foi projetada para representar aspectos importantes do gerenciamento de uma biblioteca, desde a gestão dos livros e autores até o controle dos empréstimos e das interações dos usuários. Este design modular e orientado a objetos não só melhora a organização interna do código como também facilita a expansão e manutenção do sistema, oferecendo uma base para futuros desenvolvimentos.
+Cada classe no nosso sistema foi projetada para representar aspectos importantes do gerenciamento de uma biblioteca, desde a gestão dos livros e autores até o controle dos empréstimos e das interações dos usuários. 
 
 ### 🧩 Conceitos
 
