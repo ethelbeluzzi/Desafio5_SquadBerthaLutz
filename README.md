@@ -4,28 +4,28 @@ Repositório para os exercícios do Desafio 5 da Semana 04 do Bootcamp Back-end 
 
 Integrantes: 👩‍💻
 
-1. Ethel Panitsa Beluzzi
+1. Ethel Panitsa Beluzzi <br />
 Criação do modelo base
 
-2. Hyngrid Souza e Silva
+2. Hyngrid Souza e Silva <br />
 Revisão geral e melhoria das explicações no read.me
 
-3. Karine Yasmin dos Santos Ribeiro
+3. Karine Yasmin dos Santos Ribeiro <br />
 Conceito de classe abstrata (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
 
-4. Larissa Vital Caetano Pereira
+4. Larissa Vital Caetano Pereira <br />
 Conceito de propriedade (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
 
-5. Louise Silva Ferreira
+5. Louise Silva Ferreira <br />
 Conceito de classe (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
 
-6. Marina Caponera Silva
+6. Marina Caponera Silva <br />
 Conceito de encapsulamento (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
 
-7. Natália do Nascimento da Costa
+7. Natália do Nascimento da Costa <br />
 Revisão geral do código e teste dele completo
 
-8. Sofia Nakamaru
+8. Sofia Nakamaru <br /> 
 Conceito de herança (revisão e melhoria do código, e explicação breve do seu uso no código no read.me)
 
 O desafio consiste em... o que foi feito...
